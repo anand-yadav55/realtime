@@ -1,0 +1,81 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #3f51b59c;
+}
+main{
+    margin:auto;
+    max-width:73%;
+    border: 1px solid black;
+    margin-top: 10vh;
+}
+html{
+    max-height: 100vh;
+}
+li{
+    list-style: none;
+}
+h1, h2, h3{
+    margin: 5px;
+}
+button{
+    padding: 0;
+    width: 100%;
+    height: 5vh;
+}
+
+.receiver{
+    float:right;
+    width: 50vw;
+    min-width: 20%;
+    border: 1px solid black;
+    min-height: 80vh;
+}
+#receiver-profile{
+    width: 100%;
+    height: 5vh;
+    background-color: chartreuse;   
+}
+.user{
+    float:left;
+    min-width:10%;
+    width: 20vw;
+    border: 1px solid black;
+    min-height: 80vh;
+}
+
+.profile{
+    border: 1px solid black;
+}
+.profile-pic{
+    height:50px;
+    width:50px;
+    border-radius: 50%;
+    background-color: black;
+    display: block;
+    margin:auto;
+}
+
+#logged-user{
+    margin: auto;
+    display: inline;
+}
+.receiver{
+    position: relative;
+}
+.receiver form{
+    position: absolute;
+    bottom: 0;
+}
+form{
+    width: 100%;
+}
+form input[type="text"]{
+    width: 77%;
+}
+form input[type="submit"]{
+    width: 20%;
+}

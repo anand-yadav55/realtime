@@ -1,0 +1,122 @@
+<div>
+    Hi! <%=name.toUpperCase()%>
+</div>
+    
+<a href="/logout">Logout</a>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat</title>
+  </head>
+<body>
+
+  <script src="js/jQuery.js"></script>
+  <script src="js/socket.io.js"></script>
+<!-- ----------------------------------------- -->
+  <main>
+  <div class="user">
+    <div class="profile">
+    <div class="profile-pic"></div>
+      <p id="logged-user"><%= name.toUpperCase() %></p>
+      <!-- <form onsubmit="return enterName()">
+        <input type="text" id="name" placeholder="Enter your name">
+        <input type="submit" value="   ->    ">
+      </form>       -->
+    </div>
+    <!-- <form class="search-box">
+        <i></i><input type="text" name="search" id="search">
+        <input type="submit">
+    </form> -->
+    <div>
+      <h3>All Users</h3>
+        <ul id="all-users">
+            
+        </ul>
+    </div>
+  </div>    
+
+  <div class="receiver">
+    <div>
+      <ul id="receiver-profile">
+
+      </ul>  
+    </div>
+    <div>
+      <ul id="chat-messages">
+
+      </ul>  
+    </div>
+    <form onsubmit='return sendMessage()'>
+      <input type="text" id="message" placeholder="Enter message">
+      <input type="submit" value="   ->    ">
+    </form>
+  </div>
+  </main>
+
+<!-- ---------------------------------------------- -->
+
+  <script>
+    let ioi = io("http://localhost:3000/");
+    let receiver = '';
+    let sender = '';
+
+    function enterName(){
+      //hiding the form and displaying name instead
+      document.querySelector(".profile form").style.display="none";
+      //display name
+      
+      let name = document.getElementById("name").value;
+      document.querySelector("#logged-user").innerText=name;
+
+      //send to server
+      ioi.emit("user_connected", name);
+      //prevent from submitting
+      return false;
+    }
+
+    // listening from server
+    ioi.on("user_connected", function(username){
+      console.log(username);
+      let userlist = "";
+      userlist += "<li><button onclick='onUserSelected(this.innerText);'>"+ username + "</button></li>";
+      
+      document.getElementById('all-users').innerHTML += userlist;
+      
+    });
+    let oldusername = '';
+    function onUserSelected(username){
+      //saving user in global variable
+      document.getElementById('receiver-profile').innerHTML = "<li>"+username+"</li>";
+      receiver = username;
+      if(oldusername !== username){
+        document.getElementById('chat-messages').innerHTML = "";
+        oldusername = username;
+      }
+    }
+    function sendMessage(){
+      //get message
+      let message = document.getElementById('message').value;
+
+      //send message to server
+      ioi.emit("send_message",{
+        sender: document.getElementById("name").value,
+        receiver: receiver,
+        message: message
+      })
+      document.getElementById('chat-messages').innerHTML += "<li>"+document.getElementById("name").value+" : "+document.getElementById('message').value+"</li>"
+      //prevent form submittion
+      return false;
+    }
+
+      //listen from server
+    ioi.on("new_message", function(data){
+      let html = '';
+      html +="<li>"+data.sender+" : "+data.message+"</li>";
+      document.getElementById('chat-messages').innerHTML += html;
+    })
+      
+  </script>
+</body>
+</html>

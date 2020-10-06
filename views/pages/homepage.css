@@ -1,0 +1,111 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url(images/blurred-rain.jpg);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+#top-section{
+    height: 62px;
+    width: 640px;
+    float: left;
+    background-color: coral;
+    border:5px 5px 5px 5px;
+    border-color: red;
+    border-radius:7px;     
+}
+#logo {
+    position: relative;
+    float: left;
+    margin-left: 50px;
+    padding: 12px 0px 10px 120px;
+    height: 50px;
+    width: 50px;       
+}
+#realtime-text{
+    font-weight:bold;
+    margin: 11px 10px 5px 200px;
+    padding-left: 40px;
+    font-size: 250%;  
+    border-left: 20px;
+}
+#welcome-section{
+    padding: 100px 0px 70px 140px;
+    font-size: 250%;
+    margin-left: 100px;
+    background-color: transparent;
+    width: 700px;
+    position: relative;
+    float: left;
+    color: aliceblue;
+}
+#login-box{
+    background-color: coral;
+    position: relative;
+    float:left;
+    height: 540px;
+    width: 350px;
+    margin:100px 65px 200px 50px;
+    padding: 10px 10px 10px 90px;
+    border-radius: 30px;
+}
+#login{
+    font-weight: coral;
+    font-size: 400%;
+    margin-bottom: 20px;
+}
+#login-para{
+    font-weight:bold;
+}
+.user-pass{
+    font-weight: bold;
+}
+#problem-join{
+    margin-left: 100px;
+    font-size: 20px;
+    position: relative;   
+}
+#instagram{   
+    padding-left:  60px;
+    position: relative;
+    width:20%px;
+    height:20px;
+}
+#facebook{
+    margin-left: 10px;
+    width:20%px;
+    height:20px;
+}
+#joinus{
+    padding-left:  54px;
+}
+.clear{
+    clear: both;
+}
+.gap1{
+    margin-top: 10px;
+}
+.gap2{
+    margin-top: 40px;   
+}
+.border-radius{
+    border-radius: 7px;
+}
+#log-in{
+    border-radius: 5px;
+    height: 40px;
+    width:250px;
+    font-weight:bold;
+    font-size: 150%;   
+}
+#forgot {
+    text-decoration: none;
+    font-weight: bold;
+    color: crimson;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:visited{
+    color:blueviolet; 
+}

@@ -1,0 +1,194 @@
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        padding:0;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;;
+    }
+    html{
+        min-height: 100vh;
+        max-height: 700px;
+    }
+    body{
+        background-color: #e0e0e0;
+    }
+    /* Utilites */
+    .gap1{
+        margin-top: 10px;
+    }        
+    .gap2{
+        margin-top: 21px;       
+    }
+    .border-radius{
+        border-radius: 4px;
+    }
+    a:link{
+        text-decoration: none;
+    }  
+
+
+    /* Navbar area */
+    .topnav {
+        overflow: hidden;
+        background-color: #ffffff;
+        position: relative;
+    }
+    
+    .topnav #myLinks {
+        float: right;
+    }
+    
+    .topnav a {
+        float: left;
+        color: black;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 1.9rem;
+    }
+    
+    .topnav a.icon {
+        float: right;
+        font-size: 1.9rem;
+    }
+    
+    .topnav a:hover {
+        background-color: black;
+        color:white;
+    }
+    
+    .active {
+        color: black;
+        font-size: 2.2rem;
+    }               
+                
+    /* Welcome area */
+  
+    
+    #welcome-section{
+        margin: 150px 300px;
+        margin-right: 0;
+        margin-left: 50px;
+        background-color: transparent;
+        width: 40%;
+        position: relative;
+        float: left;
+    }
+
+    header #welcome-section h1{
+        font-size: 4.3rem;
+        padding-left: 20px;
+        font-weight: normal;
+        color: black;
+    }
+
+    #problem-join{
+       margin-top: 100px;
+        margin-left: 50px;
+        font-size: 20px;        
+        position: relative;        
+    }           
+    
+    .clear{
+        clear: both;
+    }
+    
+    /* Login box */
+   
+    header #login-box{
+        position: relative;
+        background-color: #ffffff;
+        height: 532px;
+        float: right;
+        margin: 37px 100px 200px 50px;
+        padding: 10px 29px;
+        width: 370px;
+        border-radius: 37px;
+        line-height: 1.6rem;
+        font-family: 'Noto Sans' !important;
+        font-weight: bolder;
+        font-style: normal;
+        color: #b6b4b4;
+    } 
+            
+    header #login-box #login{
+        font-size: 40px;
+        color: #7c7c7c;
+        width: 150px;
+        margin-bottom: 20px;
+    }
+            
+    header #login-box #login-para{
+        font-weight:bold;
+        margin-bottom: 20px;
+    }
+                  
+    header #login-box #username{
+        font-size: 18px;
+        width:  300px;
+        height: 45px;
+        background: #D0D0D0;
+        border-radius: 7px;
+        border: none;
+        margin-bottom: 20px;
+        padding-left: 7px;
+    }
+   
+    header #login-box #password{
+        font-size: 18px;
+        width: 300px;
+        height: 45px;
+        background: #D0D0D0;
+        border-radius: 7px;
+        border: none;
+        margin-bottom: 7px;
+        padding-left: 4px;
+    }
+
+    header #login-box input::placeholder{
+        font-size: 18px;
+        color: #575757;
+        font-weight: lighter;
+        padding-left: 7px;
+
+    } 
+    
+    header #login-box input:focus{
+        outline: none;
+    }
+
+    #log-in{
+        border: none;
+        border-radius: 2px;
+        height: 40px;
+        width: 300px;
+        font-size: 150%;
+        background: #ff6565;
+        border-radius: 34px;
+        color: #ffffff;
+    }
+            
+    #forgot {
+        text-decoration: none;
+        font-weight: bold;
+        color: crimson;
+    }
+        
+    #error-message {
+        color: #E91E63;
+        display: none;
+        margin: 10px;
+        font-size: large;
+        max-width: fit-content;
+      }
+
+    .error_msg{
+        color: rgb(255, 82, 82);
+        padding-bottom: 17px;
+        font-size: 20px;
+      }
+
+    .success_msg{
+        color: rgb(43, 180, 43);
+        padding-bottom: 17px;
+        font-size: 17px;
+    }  

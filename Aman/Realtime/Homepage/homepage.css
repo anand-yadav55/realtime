@@ -1,0 +1,177 @@
+<style type="text/css">
+
+            
+            body{
+                padding: auto;
+                margin: auto;
+                background-image: url(images/background.png);
+                
+            }
+            
+            img{
+                max-width: 100%;
+                max-height: 100%;
+            }
+           
+            #topbar{
+                
+                background-color: coral;
+                width: 1534px;
+                height: 40px;
+                border: 1px black solid;
+                border-bottom: 5px black solid;
+                position: relative;
+                
+                
+            }
+        
+            #realtime-icon {
+                margin: 6px 5px 10px 50px;
+                height: 35px;
+                width: 35px;
+                position: relative;
+                float: left;
+            }
+        
+            #realtime{
+                margin: auto;
+                margin-left: 10px;
+                margin-top: 3px;
+                position: relative;
+                float: left;
+            }
+        
+            #dialog{
+                margin-top: 100px;
+                height: 400px;
+                width: 1524px;
+                background-image: url(images/blurred-rain.jpg);
+                background-size: cover;
+                position: relative;
+                
+                border:  black solid;
+            }
+            
+            
+            #welcome{
+                font-size: 80px;
+                color: aliceblue;
+                margin-left: 60px;
+            }
+            
+            .paragraph{
+                font-size: 20px;
+                color: aliceblue;
+                margin: 60px 160px 60px 60px;
+                padding-right: 360px;
+                font-family: fantasy
+                
+            }
+            
+        
+            #features{
+                font font-weight: bold;
+                font-size: 50px;
+                color: antiquewhite;
+                margin-left: 60px;
+            }
+        
+            .square-box{
+                height: 220px;
+                width: 220px;
+                border-top-left-radius: 10%;
+                border-top-right-radius: 10%;
+                float: left;
+                margin-top: 10px;
+                margin-right: 6px; 
+                margin-bottom: 0px;
+                margin-left: 60px; 
+                max-height: 100%;
+                max-width: 100%;
+                    
+            }
+            .square-boxes{
+                height: 220px;
+                width: 220px;
+                border-top-left-radius: 10%;
+                border-top-right-radius: 10%;
+                float: left;
+                margin-top: 10px;
+                margin-right: 6px; 
+                margin-bottom: 0px;
+                margin-left: 6px; 
+            }
+             img { 
+               height:100%; 
+               width:100%; 
+               object-fit:cover;
+            }
+            
+          
+       
+          
+            .feature-dialog{
+                padding: 5px 5px 5px 5px;
+                height: 80px;
+                width: 210px;
+                border-bottom-left-radius: 10%;
+                border-bottom-right-radius: 10%;
+                float: left;
+                background-color: orangered;
+                margin-top: 00px;
+                margin-right: 6px; 
+                margin-bottom: 20px;
+                margin-left: 60px; 
+            }
+            .feature-dialogs{
+                padding: 5px 5px 5px 5px;
+                height: 80px;
+                width: 210px;
+                border-bottom-left-radius: 10%;
+                border-bottom-right-radius: 10%;
+                float: left;
+                background-color: orangered;
+                margin-top: 00px;
+                margin-right: 6px; 
+                margin-bottom: 20px;
+                margin-left: 6px; 
+            }
+            
+            #login{
+                font-size: 200%;
+                font-weight: bold;
+                padding: 30px;
+                padding-right: 70px;
+                float:  right;
+                color: aliceblue;
+            }
+            
+                a:link {
+                    text-decoration: none;
+                    
+            }
+
+                a:visited {
+                    text-decoration: none;
+            }
+
+                a:hover {
+                    text-decoration: underline;
+                    
+            }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </style>
+        

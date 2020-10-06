@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>
+           Homepage
+         </title>
+        <link rel="stylesheet" type="text/css" href="/css/login.css">
+        <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Roboto&display=swap" rel="stylesheet">
+    </head>   
+    <body>
+        <nav>
+            <div class="topnav">
+                <a href="#home" class="active"><p id="realtime-text"><i class="fab fa-weixin"></i>REALTIME</p></a>
+                <div id="myLinks">
+                  <a href="#news">Services</a>
+                  <a href="#contact">Contact Us</a>
+                  <a href="#about">About</a>
+                </div>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                  <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </nav>
+        
+       <header>
+           <div channel="clear" id="welcome-section">
+                <h1>Welcome to<br>  the chat <br>  User Area</h1>
+                <div id="problem-join">
+                    <p>Problem? Contact us </p>
+                    <i class="fab fa-instagram-square"></i>
+                    <i class="fab fa-facebook-f"></i>
+                </div>
+            </div>      
+           
+            <div channel="clear" id="login-box">
+
+                <%- include('partials/messages') %>
+                
+                <h2 id="login">LOG IN</h2>
+                <p id="login-para">This is a secure system you need<br>to provide your login details to<br>continue  </p>
+                
+                <form action="./login" method="POST">
+                    <input class="border-radius" id="username" type="text" placeholder="Email" name="email"><br>
+                    <p channel="gap1"></p>
+                    <input class="border-radius" id="Password" type="password" placeholder="Password" name="password"><br>
+                    <input id="log-in" class="gap2" type="submit" value="Log In"><br>
+                    <label >Stay Log In :</label>
+                    <input id="border-submit" class="gap2" type="checkbox" >
+                    <label id="error-message"></label>
+                </form>
+                
+                <a id="forgot" href="/forgot">Forgot password ?</a><br>
+                <a id="forgot" href="/signup">Sign Up</a>
+                </div>           
+            </div>
+        </header>
+        <script src="../login.js"></script>
+    </body>
+</html>
