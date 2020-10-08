@@ -180,6 +180,8 @@ app.post("/signup", (req,res) => {
     res.redirect("/login");
   })
 
-app.listen(3000, '127.0.0.1',function(){
+  let port = process.env.PORT || 3000
+
+app.listen(port, function(){
     console.log('Node server running on port 3000');
 });
