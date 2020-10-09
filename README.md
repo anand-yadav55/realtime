@@ -2,7 +2,7 @@
 ## Downloading the repository
 <p>Make sure git is installed on your local system.<br>Move to desired directory</p>
 ```
-git clone "the repository url"
+git clone
 ```
 ## Running the application
 <p>Make sure to install the following software(s):</p>
