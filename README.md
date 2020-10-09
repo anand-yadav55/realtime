@@ -9,7 +9,8 @@
 <ol><li>node</li></ol>
 <p>Now use command-line terminal to move to the repository directory. e.g. cd C:\Users\My-PC\Desktop\Realtime</p>
 <p>type:</p>
-
+    
+    npm install
     node app.js
     
 <p>to run the application<br>
