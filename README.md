@@ -22,4 +22,6 @@ make the desired changes to the files.<br> After making all changes. Push the fi
     
     git push origin master
 
+# OR
+- download and upload all files manually by downloading as zip option and upload a file option
 # Thank You
