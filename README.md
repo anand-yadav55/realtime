@@ -18,5 +18,10 @@ make the desired changes to the files.<br> After making all changes. Push the fi
 git add .
 git push origin master 
 ```
+```
+$ cd ../lorem
+$ npm install
+$ npm start
+```
 
 # Thank You
