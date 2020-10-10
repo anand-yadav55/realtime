@@ -1,14 +1,15 @@
-<% if(typeof errors != "undefined") { %>
-    <% errors.forEach(function(error){ %>
-        <div>
-            <%= error.msg %> 
-        </div>
-     <%  }); %>
-
-
-<% } %>    
-
-
+<div class="sign-up-error">
+    <% if(typeof errors != "undefined") { %>
+        <% errors.forEach(function(error){ %>
+            <div>
+                <%= error.msg %> 
+            </div>
+         <%  }); %>
+    
+    
+    <% } %>    
+    
+</div>
 <div class="success_msg">
     <% if(success_msg != "") { %>
         <%= success_msg%> 

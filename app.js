@@ -55,14 +55,17 @@ mongoose.connect('mongodb://localhost/MyDatabase', {useNewUrlParser: true, useUn
 
 //=========Setting user signup======================================================================
 app.post("/signup", (req,res) => {
-const {username,email,password} = req.body;
+const {username,email,password,confirmPassword} = req.body;
 let errors = [];
 
 //check required fields
-if(!username || !email || !password ){
+if(!username || !email || !password || confirmPassword ){
   errors.push({msg: "Please fill in all details"});
 }
-
+//checking if password is matched
+if (password != confirmPassword) {
+  errors.push({msg: "Password should be same"})
+}
 //check pass length
 if(password.length<6){
   errors.push({msg: "Password should be atleast 6 characters"});

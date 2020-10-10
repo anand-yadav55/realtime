@@ -3,22 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up: Realtime</title>
+    <title>Sign Up!</title>
+    <link rel="stylesheet" href="/css/signup.css">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,300&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
-    
-    
-    <%- include('partials/messages') %>
-    <form action="/signup" method="POST" style="text-align: center; margin-top: 20vh;">
-        <hr>
-        <Label for="username">Enter Username</Label>
-        <input class="border-radius" id="username" type="username" placeholder="username" name="username"><br><br>
-        <label for="email">Enter Email address</label>
-        <input class="border-radius" id="email" type="email" placeholder="email" name="email"><br><br>
-        <label for="password">Enter Password</label>
-        <input class="border-radius" id="Password" type="password" placeholder="Password" name="password"><br><br>
-        <input id="log-in" class="gap2" type="submit" value="signup"><br>
-        <hr>
-    </form>    
+    <nav>
+        <div class="topnav">
+            <a href="#home" class="active"><p id="realtime-text"><i class="fab fa-weixin"></i>REALTIME</p></a>
+            <div id="myLinks">
+              <a href="#news">Services</a>
+              <a href="#contact">Contact Us</a>
+              <a href="#about">About</a>
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+              <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div id = "container-section">
+            <div id="left">
+                <div id="left-section">
+                    <h3 class="secondary-heading" id="ls-heading">Welcome to Sign Up page</h3>
+                    <p class="primary-text" id="ls-text">Let's get Started</p>
+                </div>
+            </div>
+            <div id="right">
+                <div id="right-section">
+                    <%- include('partials/messages') %>
+                    <form action="/signup" id= "form-control" method="POST">
+                        
+                           <div id="username">
+                                <label for="username">Username</label>
+                                <input type="text" name="username" id="username" placeholder="Username" >
+                           </div>
+                           <div id="email">
+                                <label for="email">E-mail</label>
+                                <input type="email" name="email" id="email" placeholder="E-mail">
+                           </div>
+                            <div id="password">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" id="password" placeholder="Password">
+                            </div>
+                            <div id="confirm-password">
+                                <label for="confirm">Confirm Password</label>
+                                <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+                            </div>
+                            <input type="submit" value="Register">
+                        </form>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="../login.js"></script>
 </body>
 </html>
