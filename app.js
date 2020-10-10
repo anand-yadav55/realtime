@@ -24,8 +24,6 @@ require("./config/passport")(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 //Setting files
 app.use(express.static("public"))
 app.use(bodyparser.urlencoded(  {extended:false})) 
@@ -46,61 +44,16 @@ app.use((req, res, next) =>{
   next();
 })
 
-//==  Mongoose Setup =======================================================
-mongoose.connect('mongodb://localhost/MyDatabase',
-  { useNewUrlParser: true, useUnifiedTopology: true })
+//  Mongoose Setup =======================================================
+mongoose.connect('mongodb://localhost/MyDatabase', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(()=>{
     console.log("1.db conneted");
   })
   .catch((err)=>{
-    console.log(err+" Error Occured");
+    console.log(" Error Occured \n"+err);
   })
-//=========================================================================
-
-
-//Routes
-app.get('/', (req, res)=>{
-res.render("login.ejs", {root:__dirname});
-})
-
-app.get("/signup", (req,res) => {
-res.render("signup");
-})
-app.get('/private', connectEnsureLogin.ensureLoggedIn(), (req, res) =>{
-res.render('private', {name:req.user.username}); //Login successful redirect///////////////////////
-});
-
-app.get('/style.css',(req, res)=>{
-res.sendFile("./style.css", {root:__dirname});
-})
-app.get('/js/socket.io.js',(req, res)=>{
-res.sendFile("./js/socket.io.js", {root:__dirname});
-})
-app.get('/js/jQuery.js',(req, res)=>{
-res.sendFile("./js/jQuery.js", {root:__dirname});
-})
-
-//  =================SOCKETS PART=============================
-var users = [];
-io.on("connection", function (socket) {
-  console.log("User connected", socket.id);
-  socket.on("user_connected", function(username){
-      users[username]=socket.id;
-      //notify all connected clients;
-      io.emit("user_connected", username);
-  })
-
-  //listen from client
-  socket.on('send_message', function(data){
-      //send event to reciever
-      let socketId = users[data.receiver];
-
-      io.to(socketId).emit("new_message", data);
-  })
-});
 
 //=========Setting user signup======================================================================
-
 app.post("/signup", (req,res) => {
 const {username,email,password} = req.body;
 let errors = [];
@@ -159,29 +112,63 @@ if(errors.length>0){
   })
 }
 })
-// ===========================================================================
-
-
-
 // ================Setting Login Request=======================================
 app.post("/login", passport.authenticate("local",{
-    failureRedirect: "/login",
-    failureFlash: true
-  }),
-  (req, res)=>{
-    res.redirect("/private");
-  }
+  failureRedirect: "/login",
+  failureFlash: true
+}),
+(req, res)=>{
+  res.redirect("/private");
+}
 )
 
 // Logout
 app.get("/logout",(req,res) =>{
-  req.logOut();
-  req.flash("success_msg","You are logged out");
-  res.redirect("/");
+req.logOut();
+req.flash("success_msg","You are logged out");
+res.redirect("/");
 })
 
-let port = process.env.PORT || 3000
+//  =================SOCKETS PART=============================
+var users = [];
+io.on("connection", function (socket) {
+  console.log("User connected", socket.id);
+  socket.on("user_connected", function(username){
+      users[username]=socket.id;
+      //notify all connected clients;
+      io.emit("user_connected", username);
+  })
 
+  //listen from client
+  socket.on('send_message', function(data){
+      //send event to reciever
+      let socketId = users[data.receiver];
+
+      io.to(socketId).emit("new_message", data);
+  })
+});
+
+//Routes
+app.get('/', (req, res)=>{
+  res.render("login.ejs", {root:__dirname});
+});
+app.get("/signup", (req,res) => {
+  res.render("signup");
+});
+app.get('/private', connectEnsureLogin.ensureLoggedIn(), (req, res) =>{
+  res.render('private', {name:req.user.username}); //Login successful redirect///////////////////////
+});
+app.get('/style.css',(req, res)=>{
+  res.sendFile("./style.css", {root:__dirname});
+});
+app.get('/js/socket.io.js',(req, res)=>{
+  res.sendFile("./js/socket.io.js", {root:__dirname});
+});
+app.get('/js/jQuery.js',(req, res)=>{
+  res.sendFile("./js/jQuery.js", {root:__dirname});
+});
+
+let port = process.env.PORT || 3000;
 app.listen(port, function(){
   console.log('Node server running on port 3000');
 });
