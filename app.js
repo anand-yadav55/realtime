@@ -59,7 +59,7 @@ const {username,email,password,confirmPassword} = req.body;
 let errors = [];
 
 //check required fields
-if(!username || !email || !password || confirmPassword ){
+if(!username || !email || !password || !confirmPassword ){
   errors.push({msg: "Please fill in all details"});
 }
 //checking if password is matched
