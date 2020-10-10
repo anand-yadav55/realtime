@@ -6,7 +6,7 @@
     
 ## Running the application
 <p>Make sure to install the following software(s):</p>
-<ol><li>node</li></ol>
+<ol><li>node</li><li>mongodb community server</li></ol>
 <p>Now use command-line terminal to move to the repository directory. e.g. cd C:\Users\My-PC\Desktop\Realtime</p>
 <p>type:</p>
     
@@ -14,7 +14,7 @@
     node app.js
     
 <p>to run the application<br>
-make the desired changes to the files.<br> After making all changes. Push the files to repository by using the following commands:</p>
+- make the desired changes to the files.<br> After making all changes. Push the files to repository by using the following commands:</p>
 
     git add .
     
