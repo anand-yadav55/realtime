@@ -26,40 +26,42 @@
         text-decoration: none;
     }  
 
+/* Utilites */
 
-    /* Navbar area */
-    .topnav {
-        overflow: hidden;
-        background-color: #ffffff;
-        position: relative;
-    }
-    
-    .topnav #myLinks {
-        float: right;
-    }
-    
-    .topnav a {
-        float: left;
-        color: black;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 1.9rem;
-    }
-    
-    .topnav a.icon {
-        float: right;
-        font-size: 1.9rem;
-    }
-    
-    .topnav a:hover {
-        background-color: black;
-        color:white;
-    }
-    
-    .active {
-        color: black;
-        font-size: 2.2rem;
-    }               
+.secondary-heading{
+    font-size: 2em;
+    margin: 10px 0;
+}
+.primary-text{
+    font-size: 1.6em;
+}
+.topnav {
+    overflow: hidden;
+    background-color: #313131;
+    position: relative;
+}
+
+.topnav #myLinks {
+    float: right;
+}
+
+.topnav a {
+    float: left;
+    color: rgb(248, 248, 248);
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 1.9rem;
+}
+
+.topnav a.icon {
+    float: right;
+    font-size: 1.9rem;
+}
+
+.topnav a:hover {
+    background-color: black;
+    color:white;
+}
                 
     /* Welcome area */
   

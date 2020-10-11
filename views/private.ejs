@@ -1,3 +1,4 @@
+<%- include('./partials/header.ejs')%>
 <div>
     Hi! <%=name.toUpperCase()%>
 </div>
@@ -8,6 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/public/css/login.css">
+    <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Roboto&display=swap" rel="stylesheet">
     <title>Chat</title>
   </head>
 <body>
@@ -20,15 +25,7 @@
     <div class="profile">
     <div class="profile-pic"></div>
       <p id="logged-user"><%= name.toUpperCase() %></p>
-      <!-- <form onsubmit="return enterName()">
-        <input type="text" id="name" placeholder="Enter your name">
-        <input type="submit" value="   ->    ">
-      </form>       -->
     </div>
-    <!-- <form class="search-box">
-        <i></i><input type="text" name="search" id="search">
-        <input type="submit">
-    </form> -->
     <div>
       <h3>All Users</h3>
         <ul id="all-users">
@@ -36,7 +33,6 @@
         </ul>
     </div>
   </div>    
-
   <div class="receiver">
     <div>
       <ul id="receiver-profile">
@@ -55,26 +51,10 @@
   </div>
   </main>
 
-<!-- ---------------------------------------------- -->
-
   <script>
     let ioi = io("http://localhost:3000/");
     let receiver = '';
     let sender = '';
-
-    function enterName(){
-      //hiding the form and displaying name instead
-      document.querySelector(".profile form").style.display="none";
-      //display name
-      
-      let name = document.getElementById("name").value;
-      document.querySelector("#logged-user").innerText=name;
-
-      //send to server
-      ioi.emit("user_connected", name);
-      //prevent from submitting
-      return false;
-    }
 
     // listening from server
     ioi.on("user_connected", function(username){
