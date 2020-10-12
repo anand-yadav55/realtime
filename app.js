@@ -9,9 +9,13 @@ const User = require("./models/User");
 const { ensureAuthenticated } = require("./config/auth")
 const connectEnsureLogin = require('connect-ensure-login');
 
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
 
+const http = require("http").createServer(app);
+const io = require("socket.io").listen(http);
+let port = process.env.PORT || 3000;
+http.listen(port, function(){
+  console.log('Node server running on port 3000');
+});
 //Express Session Middleware
 const expressSession = require('express-session')({
   secret: 'secret',
@@ -117,7 +121,8 @@ if(errors.length>0){
 })
 // ================Setting Login Request=======================================
 app.post("/login", passport.authenticate("local",{
-  failureRedirect: "/login",
+  successRedirect: "/private",
+  failureRedirect: "/",
   failureFlash: true
 }),
 (req, res)=>{
@@ -135,11 +140,10 @@ res.redirect("/");
 //  =================SOCKETS PART=============================
 var users = [];
 io.on("connection", function (socket) {
-  console.log("User connected", socket.id);
+  console.log("user_connected", socket.id);
   socket.on("user_connected", function(username){
       users[username]=socket.id;
-      //notify all connected clients;
-      io.emit("user_connected", username);
+      console.log(users);
   })
 
   //listen from client
@@ -169,9 +173,4 @@ app.get('/js/socket.io.js',(req, res)=>{
 });
 app.get('/js/jQuery.js',(req, res)=>{
   res.sendFile("./js/jQuery.js", {root:__dirname});
-});
-
-let port = process.env.PORT || 3000;
-app.listen(port, function(){
-  console.log('Node server running on port 3000');
 });
