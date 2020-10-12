@@ -8,6 +8,7 @@ const flash = require("connect-flash");
 const User = require("./models/User");
 const { ensureAuthenticated } = require("./config/auth")
 const connectEnsureLogin = require('connect-ensure-login');
+const { update } = require("./models/User");
 
 
 const http = require("http").createServer(app);
@@ -49,7 +50,7 @@ app.use((req, res, next) =>{
 })
 
 //  Mongoose Setup =======================================================
-mongoose.connect('mongodb://localhost/MyDatabase', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb://localhost:27017/MyDatabase', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(()=>{
     console.log("1.db conneted");
   })
@@ -139,18 +140,22 @@ res.redirect("/");
 
 //  =================SOCKETS PART=============================
 var users = [];
+let username1 = '';
 io.on("connection", function (socket) {
-  console.log("user_connected", socket.id);
-  socket.on("user_connected", function(username){
-      users[username]=socket.id;
-      console.log(users);
+  console.log("user connected", socket.id);
+  socket.on("user_connected",async function(username1){
+      console.log(username1);
+        await User.updateOne({username: username1}, {
+        socketId: socket.id
+      })
+      let updateSocket = await User.findOne();
+      console.log(updateSocket.socketId);
   })
-
+  socket.on('disconnect', ()=>console.log('user disconnected '+socket.id));
   //listen from client
   socket.on('send_message', function(data){
       //send event to reciever
       let socketId = users[data.receiver];
-
       io.to(socketId).emit("new_message", data);
   })
 });
@@ -162,8 +167,13 @@ app.get('/', (req, res)=>{
 app.get("/signup", (req,res) => {
   res.render("signup");
 });
-app.get('/private', connectEnsureLogin.ensureLoggedIn(), (req, res) =>{
-  res.render('private', {name:req.user.username}); //Login successful redirect///////////////////////
+app.get('/private', connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
+  let db = "mongodb://localhost:27017/MyDatabase";
+  let allUsers = await User.find({});
+  res.render('private', {
+    name: req.user.username,
+    users: allUsers
+  }) //Login successful redirect///////////////////////
 });
 app.get('/style.css',(req, res)=>{
   res.sendFile("./style.css", {root:__dirname});

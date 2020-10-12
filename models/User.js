@@ -13,6 +13,10 @@ const UserSchema = new  mongoose.Schema({
     username: {
       type: String,
       required: true
+    },
+    socketId:{
+      type: String,
+      default: null
     }
     
   }, {timestamps: true});
