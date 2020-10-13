@@ -11,9 +11,7 @@ main{
     max-width:73%;
     border: 1px solid black;
     margin-top: 10vh;
-}
-html{
-    max-height: 100vh;
+    margin-bottom: 10vh;
 }
 li{
     list-style: none;
@@ -27,6 +25,11 @@ button{
     height: 5vh;
 }
 
+.welcome{
+    font-weight: 900;
+    font-size: larger;
+    color: wheat;
+}
 .receiver{
     float:right;
     width: 50vw;
@@ -34,7 +37,16 @@ button{
     border: 1px solid black;
     min-height: 80vh;
 }
+#chat-messages{
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    min-height: 89%;
+    margin-top: 10%;
+    overflow-y: scroll;
+}
 #receiver-profile{
+    position: absolute;    
     width: 100%;
     height: 5vh;
     background-color: chartreuse;   
@@ -48,7 +60,8 @@ button{
 }
 
 .profile{
-    border: 1px solid black;
+    background-color: wheat;
+    border: 1px dotted black;
 }
 .profile-pic{
     height:50px;
@@ -58,7 +71,17 @@ button{
     display: block;
     margin:auto;
 }
-
+#logged-user{
+    color: black;
+    text-align: center;
+    font-size: larger;
+}
+#all-users{
+    background-color: transparent;
+}
+#sendMessageForm{
+    position: absolute;
+}
 #logged-user{
     margin: auto;
     display: inline;
@@ -69,12 +92,12 @@ button{
 .receiver form{
     position: absolute;
     bottom: 0;
-}
+}   
 form{
     width: 100%;
 }
 form input[type="text"]{
-    width: 77%;
+    width: 50%;
 }
 form input[type="submit"]{
     width: 20%;

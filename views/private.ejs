@@ -2,9 +2,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./../style.css">
     <link rel="stylesheet" href="/public/css/login.css">
-    <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script> -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -16,93 +16,86 @@
   <script src="js/socket.io.js"></script>
 
   <%- include('./partials/header.ejs')%>
-  <div>
+  <div class="welcome">
     Hi! <%= name.toUpperCase() %>
+    <a href="/logout">Logout</a>
   </div>
-
-  <a href="/logout">Logout</a>
   <main>
     <div class="user">
       <div class="profile">
         <div class="profile-pic"></div>
         <div class="user-name">
-          <p id="logged-user"><%= name.toUpperCase() %></p>
+          <p id="logged-user"><%= name %></p>
         </div>
-      <div>
+      </div>
+      <div class="all-user">
         <h3>All Users</h3>
           <ul id="all-users">
               <% for(var i=0; i!=users.length; i++) { %>
-                <ul>
-                  <button><li><%= users[i].username %></li></button>
-                </ul>
+                <% if(users[i].username == name)continue; %>
+                  <button class="user-connected"><%= users[i].username %></button>
               <% } %>
           </ul>
       </div>
     </div>    
     <div class="receiver">
-      <div>
-        <ul id="receiver-profile">
-
-        </ul>  
+      <div id="receiver-profile">
+        <p>Please Select the reciever from All Users</p>
       </div>
       <div>
         <ul id="chat-messages">
 
         </ul>  
       </div>
-      <form onsubmit='return sendMessage()'>
+      <form id="sendMessageForm">
         <input type="text" id="message" placeholder="Enter message">
-        <input type="submit" value="   ->    ">
+        <input id="sendMessage" type="submit" value="   ->">
       </form>
     </div>
   </main>
 
   <script>
-      window.alert("hi");
-
     let ioi = io("http://localhost:3000/");
     let receiver = '';
-    let sender = '';
+    let sender = document.getElementById('logged-user').innerText;
     
-    ioi.emit("user_connected", function(){
-      let loggedUser = document.getElementById("user-name").innerText;
-      console.log('the logged user is:'+loggedUser);
-      window.alert("hi");
-      username1 = loggedUser;
-      return 1;
-    });
+    ioi.emit("user_connected");
 
-    
-
-
-    let oldusername = '';
-    function onUserSelected(username){
-      //saving user in global variable
-      document.getElementById('receiver-profile').innerHTML = "<li>"+username+"</li>";
-      receiver = username;
-      if(oldusername !== username){
-        document.getElementById('chat-messages').innerHTML = "";
-        oldusername = username;
-      }
+    let userConnected = document.querySelectorAll('.user-connected')
+    for(let i=0; i<userConnected.length; i++){
+      userConnected[i].addEventListener('click', function(){
+        receiver = userConnected[i].innerText;
+        document.getElementById('receiver-profile').innerText = "Receiver: "+receiver;
+        console.log(receiver);
+        ioi.emit('receiverRequest', {receiver, sender});
+        ioi.on('receiverResponse', function(data){
+          console.log(data);
+          document.getElementById('chat-messages').innerHTML ="";
+          for(let i=0; i<data.length; i++){
+            document.getElementById('chat-messages').innerHTML+='<li>'+data[i].sendmessage+'</li>';
+          }
+        });
+      })
     }
+    document.getElementById('sendMessage').addEventListener('click', function(event){
+        event.preventDefault();
+        sendMessage();
+      });
     function sendMessage(){
+      
       //get message
       let message = document.getElementById('message').value;
       //send message to server
       ioi.emit("send_message",{
-        sender: document.getElementById("name").value,
+        sender: sender,
         receiver: receiver,
         message: message
       })
-      document.getElementById('chat-messages').innerHTML += "<li>"+document.getElementById("name").value+" : "+document.getElementById('message').value+"</li>"
-      //prevent form submittion
-      return false;
+      // document.getElementById('chat-messages').innerHTML += "<li>"+message+"</li>";
     }
       //listen from server
     ioi.on("new_message", function(data){
-      let html = '';
-      html +="<li>"+data.sender+" : "+data.message+"</li>";
-      document.getElementById('chat-messages').innerHTML += html;
+      document.getElementById('chat-messages').innerHTML += "<li>"+data+"</li>";
     })
   </script>
 </body>

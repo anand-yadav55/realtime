@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const passport = require('passport');
 const flash = require("connect-flash");
 const User = require("./models/User");
+const Message = require("./models/message");
 const { ensureAuthenticated } = require("./config/auth")
 const connectEnsureLogin = require('connect-ensure-login');
 const { update } = require("./models/User");
@@ -50,7 +51,7 @@ app.use((req, res, next) =>{
 })
 
 //  Mongoose Setup =======================================================
-mongoose.connect('mongodb://localhost:27017/MyDatabase', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://anand:Anandyadav@1@realtimeapp.yntiq.mongodb.net/RealtimeApp?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(()=>{
     console.log("1.db conneted");
   })
@@ -143,23 +144,49 @@ var users = [];
 let username1 = '';
 io.on("connection", function (socket) {
   console.log("user connected", socket.id);
-  socket.on("user_connected",async function(username1){
-      console.log(username1);
+  socket.on("user_connected",async function(){
         await User.updateOne({username: username1}, {
         socketId: socket.id
       })
-      let updateSocket = await User.findOne();
+      let updateSocket = await User.findOne({username: username1});
       console.log(updateSocket.socketId);
   })
+  socket.on('receiverRequest', async function(data){
+    await Message.find({$or:[
+                            {$and: [{sender: data.sender},{receiver: data.receiver}]},
+                            {$and: [{sender: data.receiver}, {receiver: data.sender}]}
+                        ]},async function(err, result){
+                          await User.findOne({username: data.sender}, function(error, response){
+                            console.log("The response request is from: "+response.socketId)
+                            
+                        io.to(response.socketId).emit('receiverResponse', result);
+                        })
+                        .then(()=>console.log("FETCHED OLD MESSAGE"+result))
+                        .catch((err)=>console.log(err))
+                      });
+    /////////////////////////////ERROR PART
+  });
+
+
   socket.on('disconnect', ()=>console.log('user disconnected '+socket.id));
   //listen from client
-  socket.on('send_message', function(data){
-      //send event to reciever
-      let socketId = users[data.receiver];
-      io.to(socketId).emit("new_message", data);
-  })
+  socket.on('send_message', async function(data){
+    // console.log(data)
+    await User.findOne({username: data.receiver}, function(err, result){
+      if(err)console.log(err);
+      console.log("resulting socket id "+result.socketId+" message: "+data.message)
+      io.to(result.socketId).emit("new_message", data.message);
+      let messageToDB = new Message({
+        sender: data.sender,
+        receiver: data.receiver,
+        sendmessage: data.message
+      });
+      messageToDB.save();
+      console.log("MESSAGE SEND:\n"+messageToDB);
+    });
+  });
 });
-
+// ====================================================
 //Routes
 app.get('/', (req, res)=>{
   res.render("login.ejs", {root:__dirname});
@@ -173,7 +200,9 @@ app.get('/private', connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
   res.render('private', {
     name: req.user.username,
     users: allUsers
-  }) //Login successful redirect///////////////////////
+  });
+  username1 = req.user.username;
+   //Login successful redirect///////////////////////
 });
 app.get('/style.css',(req, res)=>{
   res.sendFile("./style.css", {root:__dirname});
