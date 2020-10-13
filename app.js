@@ -195,11 +195,12 @@ app.get("/signup", (req,res) => {
   res.render("signup");
 });
 app.get('/private', connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
-  let db = "mongodb://localhost:27017/MyDatabase";
+  let db = "mongodb+srv://anand:Anandyadav@1@realtimeapp.yntiq.mongodb.net/RealtimeApp?retryWrites=true&w=majority";
   let allUsers = await User.find({});
   res.render('private', {
     name: req.user.username,
-    users: allUsers
+    users: allUsers,
+    port: process.env.PORT
   });
   username1 = req.user.username;
    //Login successful redirect///////////////////////
