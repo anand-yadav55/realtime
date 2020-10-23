@@ -4,13 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./../style.css">
     <link rel="stylesheet" href="/public/css/login.css">
-    <!-- <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script> -->
+    <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Roboto&display=swap" rel="stylesheet">
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
     <title>Chat</title>
   </head>
 <body>
@@ -24,94 +21,36 @@
     <a href="/logout">Logout</a>
   </div>
   <main>
-    <div class="main-section">
-      <div class="head-section">
-        <div class="headLeft-section">
-        <i class="fa fa-user" style="font-size:20px; color:aqua"></i>
+    <div class="user">
+      <div class="profile">
+        <div class="profile-pic"></div>
         <div class="user-name">
           <p id="logged-user"><%= name %></p>
         </div>
-        </div>
-        </div>
-         <div class="body-section">
-           <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
-           <h3>All Users</h3>
-             <ul>
-              <li>
+      </div>
+      <div class="all-user">
+        <h3>All Users</h3>
+          <ul id="all-users">
               <% for(var i=0; i!=users.length; i++) { %>
                 <% if(users[i].username == name)continue; %>
-                  <button class="user-connected">
-                    <div class="chatList">
-                      <div class="desc">
-                      
-                          <i class="fa fa-user" style="font: size 60px"></i>
-
-                          <%= users[i].username %>
-                       
-                						</div>
-                    </div>
-                  </button>
+                  <button class="user-connected"><b><%= users[i].username %></b></button>
               <% } %>
-               </li>
-             </ul>
-        
-
-           </div>
-        
-      
-            <div class="right-section">
-                 
-              <div class="receiver">
-                <div id="receiver-profile">
-                  <h3>Please Select the reciever from All Users</h3>
-                </div>
-                <div>
-                  <div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
-                    <ul>
-                    <li class="msg-left">
-                      <div class="msg-left-sub">
-                        <div class="msg-desc">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                        </div>
-                      </div>
-                    </li>
-                    </ul>
-                    <ul>
-                      <li class="msg-left">
-                        <div class="msg-left-sub">
-                          <div class="msg-desc">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                          </div>
-                        </div>
-                      </li>
-                      </ul>
-                  <ul id="chat-messages">
-
-                  </ul>  
-                  </div>
-             
-               
-						
-                  
-                
-                </div>
-
-                				<div class="right-section-bottom">
-
-                <form id="sendMessageForm">
-                  <input type="text" id="message" placeholder="Enter message">
-                  <input id="sendMessage" type="submit" value="   ->">
-                </form>
-              </div>
-              </div>
-
-
-      
-
-             </div>
-         </div>
+          </ul>
       </div>
+    </div>    
+    <div class="receiver">
+      <div id="receiver-profile">
+        <p>Please Select the reciever from All Users</p>
+      </div>
+      <div>
+        <ul id="chat-messages">
 
+        </ul>  
+      </div>
+      <form id="sendMessageForm">
+        <input type="text" id="message" placeholder="Enter message">
+        <input id="sendMessage" type="submit" value="   ->">
+      </form>
     </div>
   </main>
 
@@ -121,26 +60,19 @@
     let sender = document.getElementById('logged-user').innerText;
     
     ioi.emit("user_connected");
-    let clientSocketName;
+
     let userConnected = document.querySelectorAll('.user-connected')
     for(let i=0; i<userConnected.length; i++){
       userConnected[i].addEventListener('click', function(){
         receiver = userConnected[i].innerText;
-        document.getElementById('receiver-profile').innerText = "Receiver: "+receiver;
+        document.getElementById('receiver-profile').innerHTML = "Receiver: <b>"+receiver+"</b>";
         console.log(receiver);
         ioi.emit('receiverRequest', {receiver, sender});
         ioi.on('receiverResponse', function(data){
-
-          clientSocketName = receiver;
           console.log(data);
           document.getElementById('chat-messages').innerHTML ="";
           for(let i=0; i<data.length; i++){
-            if(sender == name){
-              document.getElementById('chat-messages').innerHTML+='<li>'+data[i].sendmessage+'</li>'
-            }else{
-              document.getElementById('chats-messages').innerHTML+='<li>'+data[i].sendmessage+'</li>'
-
-            }
+            document.getElementById('chat-messages').innerHTML+='<li>'+data[i].sendmessage+'</li>';
           }
         });
       })
@@ -152,7 +84,6 @@
     function sendMessage(){
       
       //get message
-      
       let message = document.getElementById('message').value;
       //send message to server
       ioi.emit("send_message",{
@@ -160,22 +91,12 @@
         receiver: receiver,
         message: message
       })
-      //document.getElementById('chats-messages').innerHTML += "<li>"+message+"</li>";
+      // document.getElementById('chat-messages').innerHTML += "<li>"+message+"</li>";
     }
       //listen from server
     ioi.on("new_message", function(data){
-      document.getElementById('chats-messages').innerHTML += "<li>"+data+"</li>";
-    
-        document.getElementById('chat-messages').innerHTML += "<li class='msg-left'>"
-          "<div class='msg-left-sub'>"
-            "<div class='msg-desc'>"
-                +data+
-            "</div>"
-          "</div>"
-          "</li>";
+      document.getElementById('chat-messages').innerHTML += "<li><b>"+data+"</b></li>";
     })
   </script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 </body>
 </html>
