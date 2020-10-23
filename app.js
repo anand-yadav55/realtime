@@ -217,5 +217,5 @@ app.get('/js/jQuery.js',(req, res)=>{
   res.sendFile("./js/jQuery.js", {root:__dirname});
 });
 app.use((req, res)=>{
-  res.send('not found');
+  res.send('not found!! the page you are finding is not available currently. Go back to homepage to get directed.');
 })
