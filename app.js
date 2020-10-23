@@ -14,9 +14,10 @@ const { update } = require("./models/User");
 
 const http = require("http").createServer(app);
 const io = require("socket.io").listen(http);
+
 let port = process.env.PORT || 3000;
 http.listen(port, function(){
-  console.log('Node server running on port 3000');
+  console.log('Node server running on port'+port);
 });
 //Express Session Middleware
 const expressSession = require('express-session')({
@@ -129,11 +130,9 @@ app.post("/login", passport.authenticate("local",{
   successRedirect: "/private",
   failureRedirect: "/",
   failureFlash: true
-}),
-(req, res)=>{
+}), (req, res)=>{
   res.redirect("/private");
-}
-)
+})
 
 // Logout
 app.get("/logout",(req,res) =>{
@@ -217,3 +216,6 @@ app.get('/js/socket.io.js',(req, res)=>{
 app.get('/js/jQuery.js',(req, res)=>{
   res.sendFile("./js/jQuery.js", {root:__dirname});
 });
+app.use((req, res)=>{
+  res.send('not found');
+})
