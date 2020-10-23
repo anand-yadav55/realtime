@@ -51,7 +51,10 @@ app.use((req, res, next) =>{
 })
 
 //  Mongoose Setup =======================================================
-mongoose.connect('mongodb://localhost:27017/MyDatabase', {useNewUrlParser: true, useUnifiedTopology: true})
+
+let db_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/MyDatabse'
+mongoose.connect(db_URI, {useNewUrlParser: true, useUnifiedTopology: true})
+
   .then(()=>{
     console.log("1.db conneted");
   })
