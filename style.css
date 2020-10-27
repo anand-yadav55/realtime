@@ -41,7 +41,7 @@ button{
     display: inline-block;
     position: absolute;
     width: 100%;
-    min-height: 89%;
+    height: 89%;
     margin-top: 10%;
     overflow-y: scroll;
 }
@@ -51,6 +51,14 @@ button{
     height: 5vh;
     background-color: chartreuse;   
 }
+
+.left{
+    float: left;
+}
+.right{
+    float: right;
+}
+
 .user{
     float:left;
     min-width:10%;

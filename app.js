@@ -53,7 +53,7 @@ app.use((req, res, next) =>{
 
 //  Mongoose Setup =======================================================
 
-let db_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/MyDatabse'
+let db_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/MyDatabase';
 mongoose.connect(db_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 
   .then(()=>{
@@ -151,19 +151,16 @@ io.on("connection", function (socket) {
         socketId: socket.id
       })
       let updateSocket = await User.findOne({username: username1});
-      console.log(updateSocket.socketId);
   })
   socket.on('receiverRequest', async function(data){
     await Message.find({$or:[
                             {$and: [{sender: data.sender},{receiver: data.receiver}]},
                             {$and: [{sender: data.receiver}, {receiver: data.sender}]}
                         ]},async function(err, result){
-                          await User.findOne({username: data.sender}, function(error, response){
-                            console.log("The response request is from: "+response.socketId)
-                            
-                        io.to(response.socketId).emit('receiverResponse', result);
-                        })
-                        .then(()=>console.log("FETCHED OLD MESSAGE"+result))
+                          await User.findOne({username: data.sender}, function(error, response){  
+                            io.to(response.socketId).emit('receiverResponse', result);
+                          })
+                        .then(()=>console.log('fetching message'))
                         .catch((err)=>console.log(err))
                       });
     /////////////////////////////ERROR PART
@@ -173,18 +170,18 @@ io.on("connection", function (socket) {
   socket.on('disconnect', ()=>console.log('user disconnected '+socket.id));
   //listen from client
   socket.on('send_message', async function(data){
-    // console.log(data)
     await User.findOne({username: data.receiver}, function(err, result){
       if(err)console.log(err);
-      console.log("resulting socket id "+result.socketId+" message: "+data.message)
-      io.to(result.socketId).emit("new_message", data.message);
+      io.to(result.socketId).emit("new_message", data);
+      User.findOne({username: data.sender}, function(err, result1){
+        io.to(result1.socketId).emit("new_message", data);
+      })
       let messageToDB = new Message({
         sender: data.sender,
         receiver: data.receiver,
         sendmessage: data.message
       });
       messageToDB.save();
-      console.log("MESSAGE SEND:\n"+messageToDB);
     });
   });
 });
@@ -197,7 +194,6 @@ app.get("/signup", (req,res) => {
   res.render("signup");
 });
 app.get('/private', connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
-  let db = "mongodb+srv://anand:Anandyadav@1@realtimeapp.yntiq.mongodb.net/RealtimeApp?retryWrites=true&w=majority";
   let allUsers = await User.find({});
   res.render('private', {
     name: req.user.username,

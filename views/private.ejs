@@ -47,7 +47,7 @@
 
         </ul>  
       </div>
-      <form id="sendMessageForm">
+      <form id="sendMessageForm" style="display: none;">
         <input type="text" id="message" placeholder="Enter message">
         <input id="sendMessage" type="submit" value="   ->">
       </form>
@@ -64,15 +64,19 @@
     let userConnected = document.querySelectorAll('.user-connected')
     for(let i=0; i<userConnected.length; i++){
       userConnected[i].addEventListener('click', function(){
+        document.getElementById('sendMessageForm').style.display = "block";
         receiver = userConnected[i].innerText;
         document.getElementById('receiver-profile').innerHTML = "Receiver: <b>"+receiver+"</b>";
-        console.log(receiver);
         ioi.emit('receiverRequest', {receiver, sender});
         ioi.on('receiverResponse', function(data){
-          console.log(data);
           document.getElementById('chat-messages').innerHTML ="";
-          for(let i=0; i<data.length; i++){
-            document.getElementById('chat-messages').innerHTML+='<li>'+data[i].sendmessage+'</li>';
+          for(let j=0; j<data.length; j++){
+            if(data[j].sender == document.getElementById('logged-user').innerText){
+              document.getElementById('chat-messages').innerHTML+='<li class="right">'+data[j].sendmessage+'</li><br>';
+            }
+            else{
+              document.getElementById('chat-messages').innerHTML+='<li class="left">'+data[j].sendmessage+'</li><br>';
+            }
           }
         });
       })
@@ -82,20 +86,22 @@
         sendMessage();
       });
     function sendMessage(){
-      
       //get message
       let message = document.getElementById('message').value;
+      document.getElementById('message').value = '';
       //send message to server
       ioi.emit("send_message",{
         sender: sender,
         receiver: receiver,
         message: message
       })
-      // document.getElementById('chat-messages').innerHTML += "<li>"+message+"</li>";
     }
       //listen from server
     ioi.on("new_message", function(data){
-      document.getElementById('chat-messages').innerHTML += "<li><b>"+data+"</b></li>";
+      if(data.sender == document.getElementById('logged-user').innerText)
+        document.getElementById('chat-messages').innerHTML += "<li class='right'><b>"+data.message+"</b></li><br>";
+      else
+        document.getElementById('chat-messages').innerHTML += "<li class='left'><b>"+data.message+"</b></li><br>";
     })
   </script>
 </body>
