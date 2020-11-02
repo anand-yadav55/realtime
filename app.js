@@ -10,14 +10,15 @@ const Message = require("./models/message");
 const { ensureAuthenticated } = require("./config/auth")
 const connectEnsureLogin = require('connect-ensure-login');
 const { update } = require("./models/User");
+const multer = require("multer");
+var path = require('path')
 
 
 const http = require("http").createServer(app);
 const io = require("socket.io").listen(http);
-
 let port = process.env.PORT || 3000;
 http.listen(port, function(){
-  console.log('Node server running on port'+port);
+  console.log('Node server running on port 3000');
 });
 //Express Session Middleware
 const expressSession = require('express-session')({
@@ -26,11 +27,12 @@ const expressSession = require('express-session')({
   saveUninitialized: false
 });
 require("./config/passport")(passport);
-
+//adding static 
+app.use(express.static(__dirname+"./public/"));
 //Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use('/public/images/', express.static('./public/images'));
 //Setting files
 app.use(express.static("public"))
 app.use(bodyparser.urlencoded(  {extended:false})) 
@@ -52,20 +54,27 @@ app.use((req, res, next) =>{
 })
 
 //  Mongoose Setup =======================================================
-
-let db_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/MyDatabase';
-mongoose.connect(db_URI, {useNewUrlParser: true, useUnifiedTopology: true})
-
+mongoose.connect('mongodb://localhost:27017/MyDatabase', {useNewUrlParser: true, useUnifiedTopology: true})
   .then(()=>{
     console.log("1.db conneted");
   })
   .catch((err)=>{
     console.log(" Error Occured \n"+err);
   })
+var Storage = multer.diskStorage({
+  destination:"./public/uploads",
+  filename:(req,file,cb)=>{
+     cb(null , file.fieldname+"_"+Date.now()+path.extname(file.originalname))
+  }
 
+})
+var upload = multer({
+  storage:Storage
+}).single('file');
 //=========Setting user signup======================================================================
-app.post("/signup", (req,res) => {
+app.post("/signup",upload, (req,res) => {
 const {username,email,password,confirmPassword} = req.body;
+const image = req.file.filename;
 let errors = [];
 
 //check required fields
@@ -87,7 +96,8 @@ if(errors.length>0){
     errors,
     username,
     email,
-    password
+    password,
+    image
   });
 } else {
   //check if user already registred
@@ -99,13 +109,14 @@ if(errors.length>0){
       errors,
       username,
       email,
-      password
+      password,image
       });
     } else{
       const newUser = new User({
         username,
         email,
-        password
+        password,
+        image
       });
 
       //Hash password
@@ -130,9 +141,11 @@ app.post("/login", passport.authenticate("local",{
   successRedirect: "/private",
   failureRedirect: "/",
   failureFlash: true
-}), (req, res)=>{
+}),
+(req, res)=>{
   res.redirect("/private");
-})
+}
+)
 
 // Logout
 app.get("/logout",(req,res) =>{
@@ -193,12 +206,15 @@ app.get('/', (req, res)=>{
 app.get("/signup", (req,res) => {
   res.render("signup");
 });
-app.get('/private', connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
+app.get('/private',  connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
+  let db = "mongodb://localhost:27017";
   let allUsers = await User.find({});
   res.render('private', {
     name: req.user.username,
     users: allUsers,
-    port: process.env.PORT
+    image:req.user.image,
+    port: process.env.PORT,
+    
   });
   username1 = req.user.username;
    //Login successful redirect///////////////////////
