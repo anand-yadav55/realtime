@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./../style.css">
     <link rel="stylesheet" href="/public/css/login.css">
+
     <script src="https://kit.fontawesome.com/6f38fb86b9.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100&family=Roboto&display=swap" rel="stylesheet">
@@ -23,33 +24,38 @@
   <main>
     <div class="user">
       <div class="profile">
-        <div class="profile-pic"></div>
+        <div class="profile-pic">
+          <img src="/images/download (3).jpg" alt="">
+        </div> 
+        
         <div class="user-name">
           <p id="logged-user"><%= name %></p>
         </div>
       </div>
+      <hr>
       <div class="all-user">
-        <h3>All Users</h3>
           <ul id="all-users">
               <% for(var i=0; i!=users.length; i++) { %>
                 <% if(users[i].username == name)continue; %>
-                  <button class="user-connected"><b><%= users[i].username %></b></button>
+                  <button class="user-connected"><%= users[i].username %></button>
+                  <hr>
               <% } %>
           </ul>
       </div>
     </div>    
     <div class="receiver">
       <div id="receiver-profile">
-        <p>Please Select the reciever from All Users</p>
+        <div id="receiver-name"><p>Select User</p></div>
       </div>
       <div>
-        <ul id="chat-messages">
-
+        <ul id="chat-messages" class="chat-section">
         </ul>  
       </div>
-      <form id="sendMessageForm" style="display: none;">
+      <form id="sendMessageForm">
         <input type="text" id="message" placeholder="Enter message">
-        <input id="sendMessage" type="submit" value="   ->">
+        <button id="sendMessage">
+          <i class="fas fa-paper-plane"></i>
+        </button>
       </form>
     </div>
   </main>
@@ -58,25 +64,20 @@
     let ioi = io();
     let receiver = '';
     let sender = document.getElementById('logged-user').innerText;
-    
+    let receiverName = document.getElementById("receiver-name");
     ioi.emit("user_connected");
-
     let userConnected = document.querySelectorAll('.user-connected')
     for(let i=0; i<userConnected.length; i++){
       userConnected[i].addEventListener('click', function(){
-        document.getElementById('sendMessageForm').style.display = "block";
         receiver = userConnected[i].innerText;
-        document.getElementById('receiver-profile').innerHTML = "Receiver: <b>"+receiver+"</b>";
+        receiverName.innerText = receiver;
+        console.log(receiver);
         ioi.emit('receiverRequest', {receiver, sender});
         ioi.on('receiverResponse', function(data){
+          console.log(data);
           document.getElementById('chat-messages').innerHTML ="";
-          for(let j=0; j<data.length; j++){
-            if(data[j].sender == document.getElementById('logged-user').innerText){
-              document.getElementById('chat-messages').innerHTML+='<li class="right">'+data[j].sendmessage+'</li><br>';
-            }
-            else{
-              document.getElementById('chat-messages').innerHTML+='<li class="left">'+data[j].sendmessage+'</li><br>';
-            }
+          for(let i=0; i<data.length; i++){
+            document.getElementById('chat-messages').innerHTML+='<li>'+data[i].sendmessage+'</li>';
           }
         });
       })
@@ -86,23 +87,23 @@
         sendMessage();
       });
     function sendMessage(){
+      
       //get message
       let message = document.getElementById('message').value;
-      document.getElementById('message').value = '';
       //send message to server
       ioi.emit("send_message",{
         sender: sender,
         receiver: receiver,
         message: message
       })
+      // document.getElementById('chat-messages').innerHTML += "<li>"+message+"</li>";
+  
     }
       //listen from server
     ioi.on("new_message", function(data){
-      if(data.sender == document.getElementById('logged-user').innerText)
-        document.getElementById('chat-messages').innerHTML += "<li class='right'><b>"+data.message+"</b></li><br>";
-      else
-        document.getElementById('chat-messages').innerHTML += "<li class='left'><b>"+data.message+"</b></li><br>";
+      document.getElementById('chat-messages').innerHTML += "<li>"+data+"</li>";
     })
   </script>
 </body>
 </html>
+
