@@ -36,7 +36,7 @@
             <div id="right">
                 <div id="right-section">
                     <%- include('partials/messages') %>
-                    <form action="/signup" id= "form-control" method="POST">
+                    <form action="/signup" id= "form-control" method="POST" enctype="multipart/form-data">
                         
                            <div id="username">
                                 <label for="username">Username</label>
@@ -53,6 +53,10 @@
                             <div id="confirm-password">
                                 <label for="confirm">Confirm Password</label>
                                 <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password">
+                            </div>
+                            <div id="confirm-password">
+                                <label for="confirm">Profile Image</label>
+                                <input type="file" name="file" >
                             </div>
                             <input type="submit" value="Register">
                         </form>
