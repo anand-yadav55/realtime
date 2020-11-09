@@ -49,7 +49,7 @@
     </div>    
     <div class="receiver">
       <div id="receiver-profile">
-        <p>Please Select the reciever from All Users</p>
+        <p>Please Select a user</p>
       </div>
       <div>
         <ul id="chat-messages">
@@ -75,7 +75,7 @@
       userConnected[i].addEventListener('click', function(){
         document.getElementById('sendMessageForm').style.display = "block";
         receiver = userConnected[i].innerText;
-        document.getElementById('receiver-profile').innerHTML = "Receiver: <b>"+receiver+"</b>";
+        document.getElementById('receiver-profile').innerHTML = "<b>"+receiver+"</b>";
         ioi.emit('receiverRequest', {receiver, sender});
         ioi.on('receiverResponse', function(data){
           document.getElementById('chat-messages').innerHTML ="";
@@ -107,10 +107,12 @@
     }
       //listen from server
     ioi.on("new_message", function(data){
-      if(data.sender == document.getElementById('logged-user').innerText)
-        document.getElementById('chat-messages').innerHTML += "<li class='right'><b>"+data.message+"</b></li><br>";
-      else
-        document.getElementById('chat-messages').innerHTML += "<li class='left'><b>"+data.message+"</b></li><br>";
+      if(receiver!=''){
+        if(data.sender == document.getElementById('logged-user').innerText)
+          document.getElementById('chat-messages').innerHTML += "<li class='right'><b>"+data.message+"</b></li><br>";
+        else
+          document.getElementById('chat-messages').innerHTML += "<li class='left'><b>"+data.message+"</b></li><br>";
+      }
     })
   </script>
 </body>

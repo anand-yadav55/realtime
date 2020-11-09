@@ -17,6 +17,10 @@ const UserSchema = new  mongoose.Schema({
     socketId:{
       type: String,
       default: null
+    },
+    image: {
+      type: String,
+      required: true
     }
     
   }, {timestamps: true});

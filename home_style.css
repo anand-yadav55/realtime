@@ -1,0 +1,266 @@
+*{
+    padding:0;
+    margin:0;
+    font-family: myFirstFont;
+    box-sizing: border-box;
+}
+.main{
+    width:100%;
+    position: relative;
+    background: rgba(0,0,0,.5) url("assets/nikita-katsevich-QXDJGPZTwxs-unsplash.jpg") no-repeat ;
+    background-size:cover;
+    background-position: center;
+    min-height:100vh;
+    background-blend-mode:overlay;
+    overflow:hidden;
+}
+nav ul{
+    font-size: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 400px;
+    text-align: center;
+    justify-content: space-around;
+    list-style: none;
+    margin-top: 15px;
+    background-color: black;
+    margin-bottom: 10px;
+}
+nav li{
+    margin: 10px;
+    padding: 8px;    
+}
+nav a{
+    text-decoration: none;
+    color:white;
+    margin-top: 30px;
+    text-align: center;
+    margin: auto;
+}
+nav a:hover{
+    text-decoration: none;
+
+}
+nav li:hover{
+    transform: scale(1.7);
+    color: black;
+    background-color: white;
+    transition-duration: 1s;
+}
+.wave{
+    position: absolute; 
+    width:100%;
+    bottom:0px;
+    opacity:1;
+    color:#fff;
+}
+.image>img{
+    width:200px;
+    height:200px;
+}
+.tech{
+    width:90%;
+    display: flex;
+    flex-wrap: wrap;
+    min-height:150px;
+    font-weight: bolder;
+}
+.tech >div{
+    width:33%;
+    display:inline-block;
+}
+.tech i{
+    margin: auto;
+    padding-left: 50px;
+}
+.tech .comment>i{
+    margin: auto;  
+}
+.tech p{
+    margin: auto;
+    height:40px;
+    width:80%;
+}
+.key{
+    animation-duration:4s;
+    animation-name:drive;
+    animation-fill-mode: both;
+}
+@keyframes drive{
+    from{transform :translateX(-1000px)}
+    to{transform: translateX(10px)}
+}
+.save{
+    animation-duration:4s;
+    animation-name:save;
+    animation-fill-mode: both;
+}
+@keyframes save{
+    from{transform :translateY(+200px)}
+    to{transform: translateY(0px)}
+}
+.comment{
+    animation-duration:4s;
+    animation-name:comment;
+    animation-fill-mode: both;
+}
+@keyframes comment{
+    from{transform :translateX(1000px)}
+    to{transform: translateX(0px)}
+}
+footer{
+    min-height:300px;
+    width:100%;
+    display:flex !important;
+    flex-wrap: wrap;
+    background-color:#26272b;}
+.about{
+    width:30%;
+    min-width: 300px;
+}
+.links{
+    width:30%;
+    min-width: 300px;
+}
+.team{
+    width:30%;
+    min-width: 300px;
+}
+.about h2{
+    margin-bottom: 40px;
+    text-transform : uppercase;
+    font-size:40px;
+    color:wheat;
+}
+.about p{
+    color:whitesmoke;
+}
+.links li{
+    list-style-type: none;
+}
+.links li a{
+    text-decoration: none;
+    color:whitesmoke;
+    font-size:25px;
+}
+.links h2{
+    text-transform: uppercase;
+    margin-bottom:30px;
+    font-size:40px;
+    color:wheat;
+}
+.about{
+    text-align:center;
+    margin-top:20px;
+    margin: auto;
+    font-size: 20px;
+}
+.links{
+    text-align:center;
+    margin-top:20px;
+    margin: auto;
+}
+.team li{
+    list-style-type: none;
+    text-decoration: none;
+    color:whitesmoke;
+    font-size: 20px;
+}
+a:hover{
+    color:rgb(25, 190, 219);
+}
+.team h2{
+    text-transform: uppercase;
+    margin-bottom:30px;
+    color:wheat;
+}
+
+.team{
+        text-align:center;
+        margin-top:20px;
+        margin: auto;
+}
+.last{
+    width:100%;
+    height:80px;
+    background-color:#26272b;
+}
+.social-media i{
+    margin: auto;
+    justify-content: space-around;
+    text-align: center;
+    padding-right:20px;
+}
+.geeks { 
+    padding: 50px;
+} 
+.geeks img{
+    margin-bottom:20px;
+
+}
+section { 
+    width: 100%; 
+    min-height: 300px; 
+} 
+
+.pattern { 
+    position: relative; 
+    background-color: #3bb78f; 
+    background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%); 
+} 
+
+.pattern:before { 
+    content: ""; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 250px; 
+    background: url("https://media.geeksforgeeks.org/wp-content/uploads/20200326181026/wave3.png"); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+}  
+@media only screen and (max-width: 420px) {
+
+    .tech div{
+        display:block;
+        height:auto;
+        width:100%;
+        margin-bottom:10px;
+        padding:0;
+        align-content: center;
+        position: relative;
+    }
+    .tech div p{
+        margin-left: 10%;
+        margin-bottom: 30px;
+    }
+    .footer{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .footer div {
+       margin:0 30%;
+    } 
+    .footer .about{
+        margin-bottom:20px;
+        margin:auto;
+    }
+    .last{
+        display: block;
+        width:100%;
+        position: absolute;
+        height:auto;
+    }
+    .last h2{
+        text-align:center;
+        margin-bottom: 30px;
+    }
+    .last div{
+        float:left;
+       margin-left:25%;
+    }
+}

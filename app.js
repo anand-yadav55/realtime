@@ -13,7 +13,6 @@ const { update } = require("./models/User");
 const multer = require("multer");
 var path = require('path')
 
-
 const http = require("http").createServer(app);
 const io = require("socket.io").listen(http);
 let port = process.env.PORT || 3000;
@@ -200,14 +199,16 @@ io.on("connection", function (socket) {
 });
 // ====================================================
 //Routes
-app.get('/', (req, res)=>{
+app.get('/',(req, res)=>{
+  res.sendFile("index.html", {root: __dirname});
+});
+app.get('/login', (req, res)=>{
   res.render("login.ejs", {root:__dirname});
 });
 app.get("/signup", (req,res) => {
   res.render("signup");
 });
 app.get('/private',  connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
-  let db = "mongodb://localhost:27017";
   let allUsers = await User.find({});
   res.render('private', {
     name: req.user.username,
@@ -218,6 +219,12 @@ app.get('/private',  connectEnsureLogin.ensureLoggedIn(),async (req, res) =>{
   });
   username1 = req.user.username;
    //Login successful redirect///////////////////////
+});
+app.get('/assets/:image', (req, res)=>{
+  res.sendFile("./assets/"+req.params.image, {root:__dirname});
+});
+app.get('/home_style.css',(req, res)=>{
+  res.sendFile("./home_style.css", {root:__dirname});
 });
 app.get('/style.css',(req, res)=>{
   res.sendFile("./style.css", {root:__dirname});
