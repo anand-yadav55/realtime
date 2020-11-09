@@ -19,11 +19,13 @@
     
 - Make the desired changes to the files.<br> After making all changes. Push the files to repository by using the following commands:</p>
 
-    git add .
+
+        git add .
     
-    git commit -m "your change"
+        git commit -m "your change"
     
-    git push https://github.com/anand-yadav55/realtime.git
+        git push https://github.com/anand-yadav55/realtime.git
+    
 
 # OR
 - Download and upload all files manually by downloading as zip option and upload a file option
