@@ -21,9 +21,8 @@
     <a href="/logout">Logout</a>
     <% for(var i=0; i!=users.length; i++) { %>
       <% if(users[i].username != name)continue; %>
-        
-
-                <img src="./uploads/<%= users[i].image%>" alt="profile-image" width="100px">
+        <% if(users[i].image% != '') %>
+          <img src="./uploads/<%= users[i].image%>" alt="profile-image" width="100px">
                
     <% } %>  
   </div>
@@ -41,8 +40,8 @@
               <% for(var i=0; i!=users.length; i++) { %>
                 <% if(users[i].username == name)continue; %>
                   <button class="user-connected"><b><%= users[i].username %></b></button>
-                  <img src="./uploads/<%= users[i].image%>" alt="profile-image" width="50px">
-
+                  <% if(users[i].image% != '') %>
+                    <img src="./uploads/<%= users[i].image%>" alt="profile-image" width="50px">
               <% } %>
           </ul>
       </div>

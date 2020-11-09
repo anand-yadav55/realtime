@@ -78,7 +78,7 @@ main{
 .welcome{
     font-weight: 900;
     font-size: larger;
-    color: wheat;
+    color: black;
 }
 .receiver{
     width: 55vw;
@@ -142,6 +142,7 @@ main{
 #all-users{
     /* background-color: black; */
     margin-top: 2px;
+    overflow-y: auto; 
 }
 
 #all-users button{
