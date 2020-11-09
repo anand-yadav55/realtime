@@ -12,16 +12,18 @@
 <p>type:</p>
     
     npm install
-    node app.js
     
 <p>To run the application<br>
+    
+    node app.js
+    
 - Make the desired changes to the files.<br> After making all changes. Push the files to repository by using the following commands:</p>
 
     git add .
     
     git commit -m "your change"
     
-    git push origin master
+    git push https://github.com/anand-yadav55/realtime.git
 
 # OR
 - Download and upload all files manually by downloading as zip option and upload a file option
